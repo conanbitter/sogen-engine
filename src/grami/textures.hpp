@@ -28,26 +28,28 @@ struct Color {
 };
 #pragma pack(pop)
 
-typedef std::vector<Color> Palette;
-
 class Texture {
    public:
     Texture(int texWidth, int texHeight) : width{texWidth}, height{texHeight}, data(texWidth * texHeight) {}
+    Texture(std::string filename);
     int getWidth() const { return width; }
     int getHeight() const { return height; }
-    void clear(Color color);
+    void copy(const Texture& other);
+    void clear(const Color color);
     void blit(const Texture& tex, int x = 0, int y = 0);
-    void blit(const Texture& tex, int x, int y, Rect rect);
+    void blit(const Texture& tex, int x, int y, const Rect& srcRect);
+    void blit(const Texture& tex, const Rect& dstRect, const Rect& srcRect);
+    void blitAlpha(const Texture& tex, int x = 0, int y = 0, float alpha, bool isPremultioplied = false);
+    void blitAlpha(const Texture& tex, int x, int y, const Rect& srcRect, float alpha, bool isPremultioplied = false);
+    void blitAlpha(const Texture& tex, const Rect& dstRect, const Rect& srcRect, float alpha, bool isPremultioplied = false);
     // pixel access with bounds check
-    uint8_t pixel(int x, int y) const;
-    void pixel(int x, int y, uint8_t color);
-    uint8_t pixel(float x, float y) const;
-    void pixel(float x, float y, uint8_t color);
+    Color getPixel(int x, int y) const;
+    Color getPixel(float x, float y) const;
+    void putPixel(int x, int y, const Color color);
     // raw pixel accsess without bounds check
-    uint8_t upixel(int x, int y) const;
-    void upixel(int x, int y, uint8_t color);
-    uint8_t upixel(float x, float y) const;
-    void upixel(float x, float y, uint8_t color);
+    Color getPixelRaw(int x, int y) const { return data[x + y * width]; }
+    void putPixelRaw(int x, int y, const Color color) { data[x + y * width] = color; }
+    Color getPixelRaw(float x, float y) const;
     Color& operator[](int index) { return data[index]; }
     Color& operator[](std::pair<int, int> coords) { return data[coords.first + coords.second * width]; }
 

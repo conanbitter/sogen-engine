@@ -8,17 +8,30 @@ void Texture::wrapCoords(int &x, int &y) const {
     if (y < 0) y += height;
 }
 
-uint8_t Texture::pixel(int x, int y) const {
+Color Texture::getPixel(int x, int y) const {
     wrapCoords(x, y);
     return data[x + y * width];
 }
 
-void Texture::pixel(int x, int y, uint8_t color) {
+Color Texture::getPixel(float x, float y) const {
+    int ix = width * x;
+    int iy = height * y;
+    wrapCoords(ix, iy);
+    return data[ix + iy * width];
+}
+
+void Texture::putPixel(int x, int y, const Color color) {
     wrapCoords(x, y);
     data[x + y * width] = color;
 }
 
-void Texture::clear(uint8_t color) {
+Color Texture::getPixelRaw(float x, float y) const {
+    int ix = width * x;
+    int iy = height * y;
+    return data[ix + iy * width];
+}
+
+void Texture::clear(const Color color) {
     std::fill(data.begin(), data.end(), color);
 }
 
@@ -86,31 +99,13 @@ void Texture::blitTransp(const Texture &tex, int x, int y, Rect rect) {
         }
     }
 }
-
+/*
 void Texture::copy(const std::vector<uint8_t> &other, int offset) {
     std::copy(other.begin(), other.end(), data.begin() + offset);
-}
+}*/
 
 void Texture::copy(const Texture &other) {
     std::copy(other.data.begin(), other.data.end(), data.begin());
-}
-
-int readU8(std::ifstream &file) {
-    uint8_t data;
-    file.read((char *)&data, 1);
-    return data;
-}
-
-int readU32(std::ifstream &file) {
-    uint32_t data;
-    file.read((char *)&data, 4);
-    return data;
-}
-
-int readI16(std::ifstream &file) {
-    int16_t data;
-    file.read((char *)&data, 2);
-    return data;
 }
 
 void TexturePack::load(const std::string filename) {
@@ -136,21 +131,4 @@ void TexturePack::load(const std::string filename) {
         newTex.transparent_color = readI16(file);
         file.read((char *)newTex.data.data(), newTex.width * newTex.height);
     }
-}
-
-Texture &TexturePack::getTexture(std::string name) {
-    auto index = names.find(name);
-    return index == names.end() ? textures[0] : textures[index->second];
-}
-
-Texture &TexturePack::getTexture(int id) {
-    if (id > textures.size()) {
-        return textures[0];
-    }
-    return textures[id];
-}
-
-int TexturePack::getTextureId(std::string name) {
-    auto index = names.find(name);
-    return index == names.end() ? -1 : index->second;
 }
