@@ -36,12 +36,12 @@ class Texture {
     int getHeight() const { return height; }
     void copy(const Texture& other);
     void clear(const Color color);
-    void blit(const Texture& tex, int x = 0, int y = 0);
-    void blit(const Texture& tex, int x, int y, const Rect& srcRect);
+    void blit(const Texture& tex, int x = 0, int y = 0);               // TODO
+    void blit(const Texture& tex, int x, int y, const Rect& srcRect);  // TODO
     void blit(const Texture& tex, const Rect& dstRect, const Rect& srcRect);
-    void blitAlpha(const Texture& tex, int x = 0, int y = 0, float alpha, bool isPremultioplied = false);
-    void blitAlpha(const Texture& tex, int x, int y, const Rect& srcRect, float alpha, bool isPremultioplied = false);
-    void blitAlpha(const Texture& tex, const Rect& dstRect, const Rect& srcRect, float alpha, bool isPremultioplied = false);
+    void blitAlpha(const Texture& tex, int x = 0, int y = 0, float alpha, bool isPremultiplied = false);                      // TODO
+    void blitAlpha(const Texture& tex, int x, int y, const Rect& srcRect, float alpha, bool isPremultiplied = false);         // TODO
+    void blitAlpha(const Texture& tex, const Rect& dstRect, const Rect& srcRect, float alpha, bool isPremultiplied = false);  // TODO
     // pixel access with bounds check
     Color getPixel(int x, int y) const;
     Color getPixel(float x, float y) const;

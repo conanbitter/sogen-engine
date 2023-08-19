@@ -35,42 +35,11 @@ void Texture::clear(const Color color) {
     std::fill(data.begin(), data.end(), color);
 }
 
-static void boundsCheck(Rect &rect, int x, int y, int width, int height, int texWidth, int texHeight) {
-    if (rect.x < 0) {
-        rect.w -= rect.x;
-        rect.x = 0;
-    }
-    if (x < 0) {
-        rect.w -= x;
-        x = 0;
-    }
-    if (rect.y < 0) {
-        rect.h -= rect.y;
-        rect.y = 0;
-    }
-    if (y < 0) {
-        rect.h -= y;
-        y = 0;
-    }
-    if (rect.x + rect.w >= texWidth) {
-        rect.w = texWidth - rect.x;
-    }
-    if (x + rect.w >= width) {
-        rect.w = width - x;
-    }
-    if (rect.y + rect.h >= texHeight) {
-        rect.h = texHeight - rect.y;
-    }
-    if (y + rect.h >= height) {
-        rect.h = height - y;
-    }
-}
-
 void Texture::blit(const Texture &tex, int x, int y) {
     blit(tex, x, y, Rect(0, 0, tex.width, tex.height));
 }
 
-void Texture::blit(const Texture &tex, int x, int y, Rect rect) {
+void Texture::blit(const Texture &tex, int x, int y, const Rect &rect) {
     boundsCheck(rect, x, y, width, height, tex.width, tex.height);
     if (rect.w <= 0 || rect.h <= 0) return;
 
@@ -82,11 +51,11 @@ void Texture::blit(const Texture &tex, int x, int y, Rect rect) {
     }
 }
 
-void Texture::blitTransp(const Texture &tex, int x, int y) {
-    blitTransp(tex, x, y, Rect(0, 0, tex.width, tex.height));
+void Texture::blitAlpha(const Texture &tex, int x, int y, float alpha, bool isPremultiplied = false) {
+    blitAlpha(tex, x, y, Rect(0, 0, tex.width, tex.height), alpha, isPremultiplied);
 }
 
-void Texture::blitTransp(const Texture &tex, int x, int y, Rect rect) {
+void Texture::blitAlpha(const Texture &tex, int x, int y, const Rect &rect, float alpha, bool isPremultiplied = false) {
     boundsCheck(rect, x, y, width, height, tex.width, tex.height);
     if (rect.w <= 0 || rect.h <= 0) return;
 
