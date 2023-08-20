@@ -18,10 +18,6 @@ class TestScene : public Scene {
     int y;
     int dx;
     int dy;
-    int w;
-    int h;
-    int back;
-    int front;
     Texture bg;
     Texture fg;
 
