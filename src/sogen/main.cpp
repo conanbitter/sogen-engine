@@ -34,20 +34,6 @@ class TestScene : public Scene {
 
         bg = Texture("../../../../assets/bg2.jpg");
         fg = Texture("../../../../assets/logo.png");
-
-        /*texs.load("../../../../assets/test.txs");
-        back = texs.getTextureId("poster 3");
-        front = texs.getTextureId("avatar1");
-        gfx.setPalette(pal);
-        gfx.setPalette(texs);
-        gfx.clear(0);
-        w = texs.getTexture(front).getWidth();
-        h = texs.getTexture(front).getHeight();
-        Texture& head = texs.getTexture(front);
-        texs.getTexture(back).blitTransp(head, 40, 40);
-        for (int i = 0; i < head.getWidth() * head.getHeight(); i += 2) {
-            head[i] = head.getTransparent();
-        }*/
     }
 
     void onUnload(App& app, Renderer& gfx) override {
@@ -57,8 +43,8 @@ class TestScene : public Scene {
     void onUpdate(float deltaTime, App& app, Renderer& gfx) override {
         x += dx;
         y += dy;
-        if (x >= SCREEN_WIDTH - 1) dx = -1;
-        if (y >= SCREEN_HEIGHT - 1) dy = -1;
+        if (x >= SCREEN_WIDTH - fg.getWidth() + 20) dx = -1;
+        if (y >= SCREEN_HEIGHT - fg.getHeight() + 20) dy = -1;
         if (x <= -20) dx = 1;
         if (y <= -20) dy = 1;
     }
@@ -67,18 +53,6 @@ class TestScene : public Scene {
         // gfx.clear(Color::Black);
         gfx.copy(bg);
         gfx.blitAlpha(fg, x, y, 0.5f);
-        // gfx.putPixel(x, y, Color(255, 128 + x % 128, 128 + y % 128));
-        /*Texture& head = texs.getTexture(front);
-        for (int i = 0; i < head.getWidth() * head.getHeight(); i++) {
-            int tx = rand() % head.getWidth();
-            int ty = rand() % head.getHeight();
-            if (head[std::pair<int, int>(tx, ty)] == head.getTransparent()) continue;
-            head[std::pair<int, int>(tx, ty)] = head.getTransparent();
-            break;
-        }*/
-        /*gfx.blit(texs.getTexture(back));
-        gfx.blitTransp(texs.getTexture(front), x, y);
-        texs.getTexture(back).copy(gfx);*/
     };
 };
 
