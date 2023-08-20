@@ -12,6 +12,8 @@ struct Rect {
     int h;
 
     Rect(int x, int y, int width, int height) : x{x}, y{y}, w{width}, h{height} {}
+    Rect crop(const Rect other);
+    Rect offset(int dx, int dy);
 };
 
 #pragma pack(push, 1)
@@ -24,7 +26,14 @@ struct Color {
     constexpr Color(uint8_t red, uint8_t green, uint8_t blue) : r{red}, g{green}, b{blue}, a{255} {}
     constexpr Color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha) : r{red}, g{green}, b{blue}, a{alpha} {}
     constexpr Color() : r{0}, g{0}, b{0}, a{255} {}
-    // TODO operators
+    Color operator+(const Color& other);
+    Color& operator+=(const Color& other);
+    Color operator-(const Color& other);
+    Color& operator-=(const Color& other);
+    Color operator*(float k);
+    Color& operator*=(float k);
+    Color operator/(float k);
+    Color& operator/=(float k);
 
     static const Color Black;
     static const Color White;
@@ -42,12 +51,12 @@ class Texture {
     int getHeight() const { return height; }
     void copy(const Texture& other);
     void clear(const Color color);
-    void blit(const Texture& tex, int x = 0, int y = 0);                                                                      // TODO
-    void blit(const Texture& tex, int x, int y, const Rect& srcRect);                                                         // TODO
-    void blit(const Texture& tex, const Rect& dstRect, const Rect& srcRect);                                                  // TODO
-    void blitAlpha(const Texture& tex, int x, int y, float alpha, bool isPremultiplied = false);                              // TODO
-    void blitAlpha(const Texture& tex, int x, int y, const Rect& srcRect, float alpha, bool isPremultiplied = false);         // TODO
-    void blitAlpha(const Texture& tex, const Rect& dstRect, const Rect& srcRect, float alpha, bool isPremultiplied = false);  // TODO
+    void blit(const Texture& tex, int x = 0, int y = 0);
+    void blit(const Texture& tex, int x, int y, Rect srcRect);
+    void blit(const Texture& tex, Rect dstRect, Rect srcRect);  // TODO
+    void blitAlpha(const Texture& tex, int x, int y, float alpha, bool isPremultiplied = false);
+    void blitAlpha(const Texture& tex, int x, int y, Rect srcRect, float alpha, bool isPremultiplied = false);
+    void blitAlpha(const Texture& tex, Rect dstRect, Rect srcRect, float alpha, bool isPremultiplied = false);  // TODO
     // pixel access with bounds check
     Color getPixel(int x, int y) const;
     Color getPixel(float x, float y) const;

@@ -23,6 +23,7 @@ class TestScene : public Scene {
     int back;
     int front;
     Texture bg;
+    Texture fg;
 
     void onLoad(App& app, Renderer& gfx) override {
         Scene::onLoad(app, gfx);
@@ -32,6 +33,7 @@ class TestScene : public Scene {
         dy = rand() % 2 == 0 ? 1 : -1;
 
         bg = Texture("../../../../assets/bg2.jpg");
+        fg = Texture("../../../../assets/logo.png");
 
         /*texs.load("../../../../assets/test.txs");
         back = texs.getTextureId("poster 3");
@@ -57,14 +59,15 @@ class TestScene : public Scene {
         y += dy;
         if (x >= SCREEN_WIDTH - 1) dx = -1;
         if (y >= SCREEN_HEIGHT - 1) dy = -1;
-        if (x <= 0) dx = 1;
-        if (y <= 0) dy = 1;
+        if (x <= -20) dx = 1;
+        if (y <= -20) dy = 1;
     }
 
     void onRender(App& app, Renderer& gfx) override {
         // gfx.clear(Color::Black);
         gfx.copy(bg);
-        gfx.putPixel(x, y, Color(255, 128 + x % 128, 128 + y % 128));
+        gfx.blitAlpha(fg, x, y, 0.5f);
+        // gfx.putPixel(x, y, Color(255, 128 + x % 128, 128 + y % 128));
         /*Texture& head = texs.getTexture(front);
         for (int i = 0; i < head.getWidth() * head.getHeight(); i++) {
             int tx = rand() % head.getWidth();
