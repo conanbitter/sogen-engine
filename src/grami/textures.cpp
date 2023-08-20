@@ -40,15 +40,15 @@ void Texture::blit(const Texture &tex, int x, int y) {
 }
 
 void Texture::blit(const Texture &tex, int x, int y, const Rect &rect) {
-    boundsCheck(rect, x, y, width, height, tex.width, tex.height);
-    if (rect.w <= 0 || rect.h <= 0) return;
+    /*    boundsCheck(rect, x, y, width, height, tex.width, tex.height);
+        if (rect.w <= 0 || rect.h <= 0) return;
 
-    for (int ty = 0; ty < rect.h; ty++) {
-        std::copy(
-            tex.data.begin() + rect.x + (rect.y + ty) * tex.width,
-            tex.data.begin() + rect.x + (rect.y + ty) * tex.width + rect.w,
-            data.begin() + x + (y + ty) * width);
-    }
+        for (int ty = 0; ty < rect.h; ty++) {
+            std::copy(
+                tex.data.begin() + rect.x + (rect.y + ty) * tex.width,
+                tex.data.begin() + rect.x + (rect.y + ty) * tex.width + rect.w,
+                data.begin() + x + (y + ty) * width);
+        }*/
 }
 
 void Texture::blitAlpha(const Texture &tex, int x, int y, float alpha, bool isPremultiplied = false) {
@@ -56,17 +56,17 @@ void Texture::blitAlpha(const Texture &tex, int x, int y, float alpha, bool isPr
 }
 
 void Texture::blitAlpha(const Texture &tex, int x, int y, const Rect &rect, float alpha, bool isPremultiplied = false) {
-    boundsCheck(rect, x, y, width, height, tex.width, tex.height);
-    if (rect.w <= 0 || rect.h <= 0) return;
+    /*    boundsCheck(rect, x, y, width, height, tex.width, tex.height);
+        if (rect.w <= 0 || rect.h <= 0) return;
 
-    uint8_t tranpColor = tex.transparent_color;
-    for (int ty = 0; ty < rect.h; ty++) {
-        for (int tx = 0; tx < rect.w; tx++) {
-            uint8_t color = tex.data[rect.x + tx + (rect.y + ty) * tex.width];
-            if (color == tranpColor) continue;
-            data[x + tx + (y + ty) * width] = color;
-        }
-    }
+        uint8_t tranpColor = tex.transparent_color;
+        for (int ty = 0; ty < rect.h; ty++) {
+            for (int tx = 0; tx < rect.w; tx++) {
+                uint8_t color = tex.data[rect.x + tx + (rect.y + ty) * tex.width];
+                if (color == tranpColor) continue;
+                data[x + tx + (y + ty) * width] = color;
+            }
+        }*/
 }
 /*
 void Texture::copy(const std::vector<uint8_t> &other, int offset) {
@@ -76,7 +76,7 @@ void Texture::copy(const std::vector<uint8_t> &other, int offset) {
 void Texture::copy(const Texture &other) {
     std::copy(other.data.begin(), other.data.end(), data.begin());
 }
-
+/*
 void TexturePack::load(const std::string filename) {
     std::ifstream file(filename, std::ios::in | std::ios::binary);
 
@@ -100,4 +100,4 @@ void TexturePack::load(const std::string filename) {
         newTex.transparent_color = readI16(file);
         file.read((char *)newTex.data.data(), newTex.width * newTex.height);
     }
-}
+}*/

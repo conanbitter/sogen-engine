@@ -31,14 +31,14 @@ struct Color {
 class Texture {
    public:
     Texture(int texWidth, int texHeight) : width{texWidth}, height{texHeight}, data(texWidth * texHeight) {}
-    Texture(std::string filename);
+    Texture(std::string filename);  // TODO
     int getWidth() const { return width; }
     int getHeight() const { return height; }
     void copy(const Texture& other);
     void clear(const Color color);
-    void blit(const Texture& tex, int x = 0, int y = 0);               // TODO
-    void blit(const Texture& tex, int x, int y, const Rect& srcRect);  // TODO
-    void blit(const Texture& tex, const Rect& dstRect, const Rect& srcRect);
+    void blit(const Texture& tex, int x = 0, int y = 0);                                                                      // TODO
+    void blit(const Texture& tex, int x, int y, const Rect& srcRect);                                                         // TODO
+    void blit(const Texture& tex, const Rect& dstRect, const Rect& srcRect);                                                  // TODO
     void blitAlpha(const Texture& tex, int x = 0, int y = 0, float alpha, bool isPremultiplied = false);                      // TODO
     void blitAlpha(const Texture& tex, int x, int y, const Rect& srcRect, float alpha, bool isPremultiplied = false);         // TODO
     void blitAlpha(const Texture& tex, const Rect& dstRect, const Rect& srcRect, float alpha, bool isPremultiplied = false);  // TODO
