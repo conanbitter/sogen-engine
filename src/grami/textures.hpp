@@ -24,7 +24,10 @@ struct Color {
     Color(uint8_t red, uint8_t green, uint8_t blue) : r{red}, g{green}, b{blue}, a{255} {}
     Color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha) : r{red}, g{green}, b{blue}, a{alpha} {}
     // TODO operators
-    Color() : r{0}, g{0}, b{0}, a{255} {}
+    constexpr Color() : r{0}, g{0}, b{0}, a{255} {}
+
+    static const Color Black;
+    static const Color White;
 };
 #pragma pack(pop)
 

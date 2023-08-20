@@ -1,6 +1,9 @@
 #include "textures.hpp"
 #include <fstream>
 
+constexpr Color Color::Black = Color(0, 0, 0);
+constexpr Color Color::White = Color(255, 255, 255);
+
 void Texture::wrapCoords(int &x, int &y) const {
     x %= width;
     if (x < 0) x += width;
