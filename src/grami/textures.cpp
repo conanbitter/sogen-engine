@@ -51,11 +51,11 @@ void Texture::blit(const Texture &tex, int x, int y, const Rect &rect) {
         }*/
 }
 
-void Texture::blitAlpha(const Texture &tex, int x, int y, float alpha, bool isPremultiplied = false) {
+void Texture::blitAlpha(const Texture &tex, int x, int y, float alpha, bool isPremultiplied) {
     blitAlpha(tex, x, y, Rect(0, 0, tex.width, tex.height), alpha, isPremultiplied);
 }
 
-void Texture::blitAlpha(const Texture &tex, int x, int y, const Rect &rect, float alpha, bool isPremultiplied = false) {
+void Texture::blitAlpha(const Texture &tex, int x, int y, const Rect &rect, float alpha, bool isPremultiplied) {
     /*    boundsCheck(rect, x, y, width, height, tex.width, tex.height);
         if (rect.w <= 0 || rect.h <= 0) return;
 

@@ -39,7 +39,7 @@ class Texture {
     void blit(const Texture& tex, int x = 0, int y = 0);                                                                      // TODO
     void blit(const Texture& tex, int x, int y, const Rect& srcRect);                                                         // TODO
     void blit(const Texture& tex, const Rect& dstRect, const Rect& srcRect);                                                  // TODO
-    void blitAlpha(const Texture& tex, int x = 0, int y = 0, float alpha, bool isPremultiplied = false);                      // TODO
+    void blitAlpha(const Texture& tex, int x, int y, float alpha, bool isPremultiplied = false);                              // TODO
     void blitAlpha(const Texture& tex, int x, int y, const Rect& srcRect, float alpha, bool isPremultiplied = false);         // TODO
     void blitAlpha(const Texture& tex, const Rect& dstRect, const Rect& srcRect, float alpha, bool isPremultiplied = false);  // TODO
     // pixel access with bounds check
