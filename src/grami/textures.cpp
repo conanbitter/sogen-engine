@@ -1,5 +1,7 @@
 #include "textures.hpp"
 #include <fstream>
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb/stb_image.h"
 
 constexpr Color Color::Black = Color(0, 0, 0);
 constexpr Color Color::White = Color(255, 255, 255);
@@ -71,36 +73,16 @@ void Texture::blitAlpha(const Texture &tex, int x, int y, const Rect &rect, floa
             }
         }*/
 }
-/*
-void Texture::copy(const std::vector<uint8_t> &other, int offset) {
-    std::copy(other.begin(), other.end(), data.begin() + offset);
-}*/
 
 void Texture::copy(const Texture &other) {
     std::copy(other.data.begin(), other.data.end(), data.begin());
 }
-/*
-void TexturePack::load(const std::string filename) {
-    std::ifstream file(filename, std::ios::in | std::ios::binary);
 
-    // Palette
-    size_t paletteSize = readU8(file);
-    palette.resize(paletteSize);
-    paletteOffset = readU8(file);
-    file.read((char *)palette.data(), sizeof(Color) * paletteSize);
-
-    // Textures
-    size_t textureCount = readU32(file);
-    textures.reserve(textureCount);
-    for (int i = 0; i < textureCount; i++) {
-        char name[16];
-        file.read(name, 16);
-        names[name] = i;
-
-        int width = readU32(file);
-        int height = readU32(file);
-        Texture &newTex = textures.emplace_back(width, height);
-        newTex.transparent_color = readI16(file);
-        file.read((char *)newTex.data.data(), newTex.width * newTex.height);
-    }
-}*/
+Texture::Texture(const std::string filename) {
+    int ch;
+    unsigned char *imageData = stbi_load(filename.c_str(), &width, &height, &ch, 4);
+    data.resize(width * height);
+    clear(Color::White);
+    std::copy((Color *)imageData, (Color *)imageData + width * height, data.begin());
+    stbi_image_free(imageData);
+}

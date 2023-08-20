@@ -21,10 +21,10 @@ struct Color {
     uint8_t b;
     uint8_t a;
 
-    Color(uint8_t red, uint8_t green, uint8_t blue) : r{red}, g{green}, b{blue}, a{255} {}
-    Color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha) : r{red}, g{green}, b{blue}, a{alpha} {}
-    // TODO operators
+    constexpr Color(uint8_t red, uint8_t green, uint8_t blue) : r{red}, g{green}, b{blue}, a{255} {}
+    constexpr Color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha) : r{red}, g{green}, b{blue}, a{alpha} {}
     constexpr Color() : r{0}, g{0}, b{0}, a{255} {}
+    // TODO operators
 
     static const Color Black;
     static const Color White;
@@ -33,8 +33,11 @@ struct Color {
 
 class Texture {
    public:
+    Texture() : width{0}, height{0}, data(0) {}
     Texture(int texWidth, int texHeight) : width{texWidth}, height{texHeight}, data(texWidth * texHeight) {}
-    Texture(std::string filename);  // TODO
+    Texture(const std::string filename);
+    // Texture(Texture const&) = delete;
+    // Texture& operator=(Texture const&) = delete;
     int getWidth() const { return width; }
     int getHeight() const { return height; }
     void copy(const Texture& other);
@@ -57,7 +60,6 @@ class Texture {
     Color& operator[](std::pair<int, int> coords) { return data[coords.first + coords.second * width]; }
 
    protected:
-    Texture() : width{0}, height{0}, data(0) {}
     int width;
     int height;
     std::vector<Color> data;
