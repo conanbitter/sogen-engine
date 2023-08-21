@@ -13,20 +13,28 @@ void Log(const char* line) {
     std::cout << line << std::endl;
 }
 
-class TestScene : public Scene {
+struct Entity {
     int x;
     int y;
     int dx;
     int dy;
+};
+
+class TestScene : public Scene {
     Texture bg;
     Texture fg;
+    std::vector<Entity> entities;
 
     void onLoad(App& app, Renderer& gfx) override {
         Scene::onLoad(app, gfx);
-        x = rand() % SCREEN_WIDTH;
-        y = rand() % SCREEN_HEIGHT;
-        dx = rand() % 2 == 0 ? 1 : -1;
-        dy = rand() % 2 == 0 ? 1 : -1;
+        for (int i = 0; i < 100; i++) {
+            Entity data;
+            data.x = rand() % SCREEN_WIDTH;
+            data.y = rand() % SCREEN_HEIGHT;
+            data.dx = rand() % 2 == 0 ? 1 : -1;
+            data.dy = rand() % 2 == 0 ? 1 : -1;
+            entities.push_back(data);
+        }
 
         bg = Texture("../../../../assets/bg2.jpg");
         fg = Texture("../../../../assets/logo.png");
@@ -37,18 +45,22 @@ class TestScene : public Scene {
     }
 
     void onUpdate(float deltaTime, App& app, Renderer& gfx) override {
-        x += dx;
-        y += dy;
-        if (x >= SCREEN_WIDTH - fg.getWidth() + 20) dx = -1;
-        if (y >= SCREEN_HEIGHT - fg.getHeight() + 20) dy = -1;
-        if (x <= -20) dx = 1;
-        if (y <= -20) dy = 1;
+        for (Entity& entity : entities) {
+            entity.x += entity.dx;
+            entity.y += entity.dy;
+            if (entity.x >= SCREEN_WIDTH - fg.getWidth() + 20) entity.dx = -1;
+            if (entity.y >= SCREEN_HEIGHT - fg.getHeight() + 20) entity.dy = -1;
+            if (entity.x <= -20) entity.dx = 1;
+            if (entity.y <= -20) entity.dy = 1;
+        }
     }
 
     void onRender(App& app, Renderer& gfx) override {
         // gfx.clear(Color::Black);
         gfx.copy(bg);
-        gfx.blitAlpha(fg, x, y, 0.5f);
+        for (Entity& entity : entities) {
+            gfx.blitAlpha(fg, entity.x, entity.y, 0.5f);
+        }
     };
 };
 

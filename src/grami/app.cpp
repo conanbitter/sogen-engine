@@ -27,6 +27,8 @@ void App::initSDL(const std::string& title) {
 
     glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
     keyboardState = SDL_GetKeyboardState(nullptr);
+
+    SDL_GL_SetSwapInterval(0);
 }
 
 void App::init(const std::string title, int width, int height, int scale) {
